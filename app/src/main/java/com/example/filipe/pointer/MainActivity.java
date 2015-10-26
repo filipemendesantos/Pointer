@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,14 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_PIC_REQUEST) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            if(photo != null)
+            if(data != null)
             {
-                ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                Bitmap bmp = toGrayscale(photo);
-                imageView.setImageBitmap(bmp);
-
-                showMessageBox("Cor", "Pixel: ");
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                if(photo != null)
+                {
+                    ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                    Bitmap bmp = toGrayscale(photo);
+                    imageView.setImageBitmap(bmp);
+                }
             }
         }
     }
