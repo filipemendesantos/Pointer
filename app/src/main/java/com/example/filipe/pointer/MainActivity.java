@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -31,8 +32,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnGo_Click(View view)
     {
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.finger_right);
+        bm = toGrayscale(bm);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        imageView.setImageBitmap(bm);
+        checkRight(bm);
+
+        /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);*/
+    }
+
+    public void checkRight(Bitmap bmp)
+    {
+        int width = bmp.getWidth() - 1;
+        int height = bmp.getHeight();
+        for (int i = width; i > width - (width * 3); i--)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                int pixel = bmp.getPixel(i, j);
+                System.out.println(i + " - " + j + ": " + pixel);
+            }
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
